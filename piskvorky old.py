@@ -59,7 +59,6 @@ make_move(0, 1)
 make_move(2, 2)
 make_move(1, 2)
 
-
 def draw():
     canvas.create_rectangle(0, 0, 600, 600, fill="#FFFFFF")
     canvas.create_line(0, 200, 600, 200, fill="#000000", width=5)
@@ -73,7 +72,6 @@ def draw():
                 canvas.create_line(160+200*x, 40+200*y, 40+200*x, 160+200*y, fill="#0000FF", width=5)
             elif board[x][y] == RING:
                 canvas.create_oval(40+200*x, 40+200*y, 160+200*x, 160+200*y, outline="#FF0000", width=5)
-
 
 draw()
 

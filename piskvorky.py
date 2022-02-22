@@ -118,12 +118,12 @@ def checkWin(player):
         for j in range(size):
             if board[j][i] == player:
                 inARow = inARow + 1
-                print(f"{j},{i} = {player}")
+                #print(f"{j},{i} = {player}")
                 if inARow == 4:
                     return 1
             elif board[j][i] != player:
                 inARow = 0
-                print(f"{j},{i} = {0}")
+                #print(f"{j},{i} = {0}")
             if j == 7:
                 inARow = 0
 
@@ -133,30 +133,35 @@ def checkWin(player):
         for j in range(size):
             if board[i][j] == player:
                 inARow = inARow + 1
-                print(f"{i},{j} = {player}")
+                #print(f"{i},{j} = {player}")
                 if inARow == 4:
                     return 1
             elif board[i][j] != player:
                 inARow = 0
-                print(f"{i},{j} = {0}")
+                #print(f"{i},{j} = {0}")
             if j == 7:
                 inARow = 0
 
-    #check diagonals left to right
+    #check upper diagonals left to right
     inARow = 0
-    for i in range(size):
-        for j in range(size):
-            if board[i][j] == player:
+    for ix in range(size):
+        for d in range(ix+1):
+            if board[ix-d][d] == player:
+                print(f"{ix-d},{d} = {player}")
                 inARow = inARow + 1
-                print(f"{i},{j} = {player}")
                 if inARow == 4:
                     return 1
-            elif board[i][j] != player:
-                inARow = 0
-                print(f"{i},{j} = {0}")
-            if j == 7:
-                inARow = 0
-    
+                elif board[ix-d][d] != player:
+                    inARow = 0 
+        inARow = 0
+
+    #check lower diagonals left to right
+    inARow = 0
+    for iy in range(size):
+        for d in range(iy+1):
+            print(f"iy: {iy}, d: {d}")
+            print(f"{size-d-1}, {iy-d}")
+
 tkinter.Grid.rowconfigure(window,0,weight=1)
 tkinter.Grid.columnconfigure(window,0,weight=1)
 canvas.grid(row=0,column=0,sticky="NSEW")
