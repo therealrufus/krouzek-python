@@ -3,7 +3,7 @@ from operator import pos
 from re import X
 from socket import INADDR_BROADCAST
 import tkinter
-from tkinter import Canvas, messagebox
+from tkinter import W, Canvas, messagebox
 from tkinter.ttk import Sizegrip
 
 window = tkinter.Tk()
@@ -19,7 +19,7 @@ CROSS = 2
 DRAW = 3
 
 size = 8
-winCount = 4
+winCount = 5
 
 board = [[EMPTY for i in range(size)] for j in range(size)]
 
@@ -120,7 +120,7 @@ def checkWin(player):
             if board[j][i] == player:
                 inARow = inARow + 1
                 #print(f"{j},{i} = {player}")
-                if inARow == 4:
+                if inARow == winCount:
                     return 1
             elif board[j][i] != player:
                 inARow = 0
@@ -135,7 +135,7 @@ def checkWin(player):
             if board[i][j] == player:
                 inARow = inARow + 1
                 #print(f"{i},{j} = {player}")
-                if inARow == 4:
+                if inARow == winCount:
                     return 1
             elif board[i][j] != player:
                 inARow = 0
@@ -150,7 +150,7 @@ def checkWin(player):
             if board[ix-d][d] == player:
                 #print(f"{ix-d},{d} = {player}")
                 inARow = inARow + 1
-                if inARow == 4:
+                if inARow == winCount:
                     return 1
                 elif board[ix-d][d] != player:
                     inARow = 0 
@@ -166,7 +166,7 @@ def checkWin(player):
             #print(f"{posX},{posY} == {ix - d}, {d}")
             if board[posX][posY] == player:
                 inARow = inARow + 1
-                if inARow == 4:
+                if inARow == winCount:
                     return 1
                 elif board[posX][posY] != player:
                     inARow = 0 
@@ -179,7 +179,7 @@ def checkWin(player):
             #print(f"x:{ix} d:{d}, x,y({size-ix-1+d},{d})")
             if board[size-ix-1+d][d] == player:
                 inARow = inARow + 1
-                if inARow == 4:
+                if inARow == winCount:
                     return 1
                 elif board[size-ix-1+d][d] != player:
                     inARow = 0 
@@ -195,7 +195,7 @@ def checkWin(player):
             #print(f"{posX},{posY} == {ix}, {d}")
             if board[posX][posY] == player:
                 inARow = inARow + 1
-                if inARow == 4:
+                if inARow == winCount:
                     return 1
                 elif board[posX][posY] != player:
                     inARow = 0 
