@@ -147,7 +147,7 @@ def checkWin(player):
     for ix in range(size):
         for d in range(ix+1):
             if board[ix-d][d] == player:
-                print(f"{ix-d},{d} = {player}")
+                #print(f"{ix-d},{d} = {player}")
                 inARow = inARow + 1
                 if inARow == 4:
                     return 1
@@ -155,12 +155,17 @@ def checkWin(player):
                     inARow = 0 
         inARow = 0
 
-    #check lower diagonals left to right
     inARow = 0
-    for iy in range(size):
-        for d in range(iy+1):
-            print(f"iy: {iy}, d: {d}")
-            print(f"{size-d-1}, {iy-d}")
+    for ix in range(size):
+        for d in range(ix+1):
+            if board[ix-d][size - d-1] == player:
+                print(f"negr {ix-d},{size - d-1} = {player}")
+                inARow = inARow + 1
+                if inARow == 4:
+                    return 1
+                elif board[ix-d][size - d-1] != player:
+                    inARow = 0 
+        inARow = 0
 
 tkinter.Grid.rowconfigure(window,0,weight=1)
 tkinter.Grid.columnconfigure(window,0,weight=1)
