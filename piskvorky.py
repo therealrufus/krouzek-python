@@ -1,4 +1,5 @@
 from itertools import count
+from operator import pos
 from re import X
 from socket import INADDR_BROADCAST
 import tkinter
@@ -142,7 +143,7 @@ def checkWin(player):
             if j == 7:
                 inARow = 0
 
-    #check upper diagonals left to right
+    #check upper diagonals right to left
     inARow = 0
     for ix in range(size):
         for d in range(ix+1):
@@ -155,15 +156,48 @@ def checkWin(player):
                     inARow = 0 
         inARow = 0
 
+    #check lower diagonals right to left
     inARow = 0
     for ix in range(size):
         for d in range(ix+1):
-            if board[ix-d][size - d-1] == player:
-                print(f"negr {ix-d},{size - d-1} = {player}")
+            #print(f"{ix},{d}")
+            posX = size - ix  + d -1
+            posY = size - d - 1
+            #print(f"{posX},{posY} == {ix - d}, {d}")
+            if board[posX][posY] == player:
                 inARow = inARow + 1
                 if inARow == 4:
                     return 1
-                elif board[ix-d][size - d-1] != player:
+                elif board[posX][posY] != player:
+                    inARow = 0 
+        inARow = 0
+
+    #check upper diagonals left to right
+    inARow = 0
+    for ix in range(size):
+        for d in range(ix+1):
+            #print(f"x:{ix} d:{d}, x,y({size-ix-1+d},{d})")
+            if board[size-ix-1+d][d] == player:
+                inARow = inARow + 1
+                if inARow == 4:
+                    return 1
+                elif board[size-ix-1+d][d] != player:
+                    inARow = 0 
+        inARow = 0
+
+    #check lower diagonals left to right
+    inARow = 0
+    for ix in range(size):
+        for d in range(ix+1):
+            #print(f"{ix},{d}")
+            posX = ix - d
+            posY = size - d - 1
+            #print(f"{posX},{posY} == {ix}, {d}")
+            if board[posX][posY] == player:
+                inARow = inARow + 1
+                if inARow == 4:
+                    return 1
+                elif board[posX][posY] != player:
                     inARow = 0 
         inARow = 0
 
