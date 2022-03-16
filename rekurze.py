@@ -1,29 +1,28 @@
-from email.mime import multipart
 from tkinter import *
 import tkinter
-from turtle import color
 
 root = Tk()
 root.title("rekurze")
 
 wd = 600
 he = 600
-thickness = 8
-barva = "#6d8f76"
+CubeAmount = 3
 iterations = 0
-multiplier = 10
 
 canvas = tkinter.Canvas(root, width=wd, height=he)
 canvas.pack()
 
-def DrawCircle(x1, y1, x2, y2, width):
-    global iterations
-    iterations += 1
-    canvas.create_oval(x1, y1, x2, y2, width=width)
-    if iterations < 30:
-        DrawCircle(iterations*multiplier, iterations*multiplier, wd-iterations*multiplier, he-iterations*multiplier, thickness)
-    else:
-        return
+velikost = wd/CubeAmount
 
-DrawCircle(0, 0, wd, he, thickness)
+def DrawCube(size, iter):
+    iter +=1
+    if iter > 2:
+        return
+    else:
+        for i in range(3):
+            for j in range(3):
+                canvas.create_rectangle(i*size, j*size, i*size+size, j*size+size, outline="#ffffff", fill="#000000")
+                DrawCube(size/3, iter)
+
+DrawCube(velikost, iterations)
 root.mainloop()
