@@ -12,13 +12,40 @@ class Board():
         self.rnd = Random()
     
     def generateField(self, difficulty):
+        #fill mines
         for x in range(self.size):
             for y in range(self.size):
                 if self.rnd.randint(0, 5) == 1: 
                     self.playingField[x][y] = ("x")
+        
+        #fill numbers
+        for x in range(self.size):
+            for y in range(self.size):
+                if(self.playingField[x][y] != "x"):
+                    nearBombs = 0
+                    nearBombs = nearBombs + (self.checkBomb(x-1, y-1))
+                    nearBombs = nearBombs + (self.checkBomb(x, y-1))
+                    nearBombs = nearBombs + (self.checkBomb(x+1, y-1))
+                    nearBombs = nearBombs + (self.checkBomb(x-1, y))
+                    nearBombs = nearBombs + (self.checkBomb(x+1, y))
+                    nearBombs = nearBombs + (self.checkBomb(x-1, y+1))
+                    nearBombs = nearBombs + (self.checkBomb(x, y+1))
+                    nearBombs = nearBombs + (self.checkBomb(x+1, y+1))
+                    
+                    self.playingField[x][y] = nearBombs
 
+    def checkBomb(self, xb, yb):
+        if (0 <= xb < self.size) & (0 <= yb < self.size):
+            if self.playingField[xb][yb] == "x":
+                print(f"na {xb}, {yb} je bomba")
+                return 1
+            else:
+                print(f"na {xb}, {yb} není bomba")
+                return 0
+        return 0
+        
     def printField(self):
-        print(self.playingField)
+        print('\n'.join(' '.join(str(x) for x in row) for row in self.playingField))
 
 canvas.update()
 def draw():
@@ -49,10 +76,14 @@ def leftClick(event):
     x, y = event.x, event.y
     row = int(x/canvas.winfo_height()*board.size)
     col = int(y/canvas.winfo_height()*board.size)
-    if board.playingField[col][row] == "0":
-        canvas.create_rectangle(10+CellSize*row, 10+CellSize*col, 50+CellSize*row, 50+CellSize*col, outline="#000000", fill="#bebebe", width=3)
-    else:
+    if board.playingField[col][row] != "x":
+        canvas.create_text(30+CellSize*row, 30+CellSize*col, font="Calibri 20",text=board.playingField[col][row])        
+
+    elif board.playingField[col][row] == "x":
         canvas.create_oval(10+CellSize*row, 10+CellSize*col, 50+CellSize*row, 50+CellSize*col, outline="#FF0000", fill="#FF0000", width=3)
+
+    else:
+        canvas.create_rectangle(10+CellSize*row, 10+CellSize*col, 50+CellSize*row, 50+CellSize*col, outline="#000000", fill="#bebebe", width=3)
         
 root.bind("<Button-3>", rightClick)
 root.bind("<Button-1>", leftClick)
