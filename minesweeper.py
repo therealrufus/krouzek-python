@@ -15,7 +15,7 @@ class Board():
         #fill mines
         for x in range(self.size):
             for y in range(self.size):
-                if self.rnd.randint(0, 5) == 1: 
+                if self.rnd.randint(0, 4) == 1: 
                     self.playingField[x][y] = ("x")
         
         #fill numbers
